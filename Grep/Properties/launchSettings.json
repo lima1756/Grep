@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Grep": {
+      "commandName": "Project",
+      "commandLineArgs": "\"hola, esto es un argumento??\" --color -rn"
+    }
+  }
+}
