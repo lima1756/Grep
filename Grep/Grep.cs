@@ -10,80 +10,110 @@ namespace Grep
     {
 
         // flags
-        private bool color;
-        private bool lineNumber;
-        private bool recursive;
-        private string regex;
+        public bool Color { get; set; }
+        public bool LineNumber { get; set;  }
+        public bool Recursive { get; set;  }
+        public string regex;
+
+        public string Regex
+        {
+            get => regex;
+            set
+            {
+                regex = value;
+                _nfa = new Regex(value).GetNFA();
+            }
+        }
+
         private string workingPath = Directory.GetCurrentDirectory();
+        private NFA _nfa;
 
         public Grep(string regex, bool color=false, bool caseInsensitive=false, bool lineNumber=false, bool recursive=false)
         {
-            this.regex = regex;
-            this.color = color;
-            this.lineNumber = lineNumber;
-            this.recursive = recursive;
+            this.Regex = regex;
+            this.Color = color;
+            this.LineNumber = lineNumber;
+            this.Recursive = recursive;
         }
 
         public Grep()
         {
             this.regex = null;
-            this.color = false;
-            this.lineNumber = false;
-            this.recursive = false;
-            if (recursive)
-            {
-                recursiveSearch(workingPath);
-            }
-            else
-            {
-                execute(workingPath);
-            }
+            this.Color = false;
+            this.LineNumber = false;
+            this.Recursive = false;
         }
 
-        public void execute(string currentPath)
+        public void Execute()
         {
-            if (regex == null)
+            if (Regex == null)
             {
                 throw new Exception("expresion regular no introducida");
             }
-        }
 
-        public void recursiveSearch(string currentPath)
-        {
-            // TODO: check the path name
-            execute(currentPath);
-            var directories = Directory.EnumerateDirectories(currentPath);
-            foreach (string path in directories)
+            if (Recursive)
             {
-                Console.WriteLine(path);
-                recursiveSearch(path);
+                RecursiveSearch(workingPath);
+            }
+            else
+            {
+                Execute(workingPath);
             }
         }
 
-        public void SetColor(bool color)
+        private void Execute(string path)
         {
-            this.color = color;
+            var files = Directory.GetFiles(path);
+            foreach (var file in files)
+            {
+                var fileName = _nfa.Execute(Path.GetFileName(file));
+                var content = _nfa.Execute(File.ReadAllText(file));
+                if (fileName && content)
+                {
+                    WriteColor(Path.GetFileName(file), ConsoleColor.DarkGreen);
+                    Console.Write(" - ");
+                    WriteColor("Content has a match of the regex pattern", ConsoleColor.Green);
+                    Console.WriteLine();
+                }
+                else if (content)
+                {
+                    WriteColor(Path.GetFileName(file), ConsoleColor.Red);
+                    Console.Write(" - ");
+                    WriteColor("Content has a match of the regex pattern", ConsoleColor.Green);
+                    Console.WriteLine();
+                }
+                else if (fileName)
+                {
+                    WriteColor(Path.GetFileName(file), ConsoleColor.DarkGreen);
+                    Console.Write(" - ");
+                    WriteColor("Content doesn't have a match of the regex pattern", ConsoleColor.Red);
+                    Console.WriteLine();
+                }
+            }
         }
 
-        public void SetLineNumber(bool lineNumber)
+        public void RecursiveSearch(string currentPath)
         {
-            this.lineNumber = lineNumber;
+            Execute(currentPath);
+            var directories = Directory.EnumerateDirectories(currentPath);
+            foreach (string path in directories)
+            {
+                Console.Write("Searching in: ");
+                WriteColor(path+"\n", ConsoleColor.Blue);
+                RecursiveSearch(path);
+            }
         }
 
-        public void SetRecursive(bool recursive)
-        {
-            this.recursive = recursive;
-        }
 
         private void WriteLineColor(string word)
         {
 
-            WriteColor(word + "\n");
+            WriteColor(word + "\n", ConsoleColor.Red);
         }
 
-        private void WriteColor(string word)
+        private static void WriteColor(string word, ConsoleColor color)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = color;
             Console.Write(word);
             Console.ResetColor();
         }

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grep", "Grep\Grep.csproj", "{AA23F3AB-F931-43C5-9933-C7678223D606}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegexTests", "RegexTests\RegexTests.csproj", "{658A1F3E-52A8-4449-BA55-0987804C5FD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrepTests", "GrepTests\GrepTests.csproj", "{F63FB8A6-072E-4B0F-B914-8DACD8901BBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{AA23F3AB-F931-43C5-9933-C7678223D606}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA23F3AB-F931-43C5-9933-C7678223D606}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA23F3AB-F931-43C5-9933-C7678223D606}.Release|Any CPU.Build.0 = Release|Any CPU
-		{658A1F3E-52A8-4449-BA55-0987804C5FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{658A1F3E-52A8-4449-BA55-0987804C5FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{658A1F3E-52A8-4449-BA55-0987804C5FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{658A1F3E-52A8-4449-BA55-0987804C5FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F63FB8A6-072E-4B0F-B914-8DACD8901BBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F63FB8A6-072E-4B0F-B914-8DACD8901BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F63FB8A6-072E-4B0F-B914-8DACD8901BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F63FB8A6-072E-4B0F-B914-8DACD8901BBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

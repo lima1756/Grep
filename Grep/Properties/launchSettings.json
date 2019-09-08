@@ -2,7 +2,7 @@
   "profiles": {
     "Grep": {
       "commandName": "Project",
-      "commandLineArgs": "\"hola, esto es un argumento??\" --color -rn"
+      "commandLineArgs": "\"abc(abc)*\" --color -rn"
     }
   }
 }

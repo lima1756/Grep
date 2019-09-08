@@ -1,12 +1,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Grep;
 
-namespace RegexTests
+namespace GrepTests
 {
     [TestClass]
-    public class UnitTest1
+    public class RegexTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void ToPostFixTest()
         {
         }
     }

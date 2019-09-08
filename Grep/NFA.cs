@@ -28,11 +28,21 @@ namespace Grep
 
         public bool Execute(string str)
         {
+            Finished = false;
             if (Start == End)
             {
                 throw new Exception("The expression will return empty matches. It will match infinite times.");
             }
-            return Execute(this.Start, str);
+
+            var res = false;
+            while (!res && str.Length > 0)
+            {
+                // Remove this while to check the string from the beginning.
+                res = Execute(this.Start, str);
+                str = str.Substring(1);
+            }
+            
+            return res;
         }
 
         private bool Execute(Node current, string str)
@@ -41,8 +51,9 @@ namespace Grep
             {
                 return _finished;
             }
-            if (str.Length == 0 && current == End)
+            if (current == End)
             {
+                // Add to condition str.Length = 0 to check until the end of the string
                 return _finished = true;
             }
             else if (str.Length == 0 && !current.Transitions.ContainsKey(Null))
@@ -67,12 +78,9 @@ namespace Grep
                 }
                 Task.WaitAll(tasks.ToArray());
             }
-            if (str.Length > 0)
-            {
-                return Execute(current, str.Substring(1));
-            }
             return _finished;
         }
-
     }
+
+    
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Grep
 {
-    class Regex
+    internal class Regex
     {
         private static readonly List<char> Operators = new List<char>(new char[] { '*', '|', '+', '(', ')' });
 
@@ -99,7 +99,7 @@ namespace Grep
             stack.Push(op);
         }
 
-        public bool Evaluate(string str)
+        public NFA GetNFA()
         {
             var stack = new Stack<object>();
             foreach(var re in _postFix)
@@ -132,8 +132,7 @@ namespace Grep
                     stack.Push(re);
                 }
             }
-            var nfa = (NFA)stack.Pop();
-            return nfa.Execute(str);
+            return (NFA)stack.Pop();
         }
 
         private static NFA Concat(object element1, object element2)

@@ -9,27 +9,27 @@ namespace Grep
 
         static void Main(string[] args)
         {
-            //grep = new Grep();
-            //string regex = "";
-            //foreach(string arg in args)
-            //{
-            //    if (arg[0] == '-')
-            //    {
-            //        SetFlag(arg);
-            //    }
-            //    else if (regex == "")
-            //    {
-            //        regex = arg;
-            //    }
-            //    else
-            //    {
-            //        throw new Exception("Argumento \""+arg+"\" introducido no definido");
-            //    }
-            //}
-            //Console.WriteLine(regex);
-            Console.WriteLine("(ab(a|b)*a|b+)");
-            var regex = new Regex("(ab(a|b)*a|b+)");
-            Console.WriteLine(regex.Evaluate("aaa"));
+            grep = new Grep();
+            string regex = "";
+            foreach(string arg in args)
+            {
+                if (arg[0] == '-')
+                {
+                    SetFlag(arg);
+                }
+                else if (regex == "")
+                {
+                    regex = arg;
+                }
+                else
+                {
+                    throw new Exception("Argumento \""+arg+"\" introducido no definido");
+                }
+            }
+
+            grep.Regex = regex;
+            grep.Execute();
+            
             // TODO: call Grep class with the data
             Console.ReadKey();
         }
@@ -57,13 +57,13 @@ namespace Grep
                 switch (flag)
                 {
                     case "color":
-                        grep.SetColor(true);
+                        grep.Color = true;
                         break;
                     case "r":
-                        grep.SetRecursive(true);
+                        grep.Recursive = true;
                         break;
                     case "n":
-                        grep.SetLineNumber(true);
+                        grep.LineNumber = true;
                         break;
                     default:
                         throw new Exception("The provided parameter \""+flag+"\"doesn't exist");
